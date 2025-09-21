@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Script Access • Executor Only</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #fff;
+            text-align: center;
+            padding: 50px 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container { 
+            max-width: 600px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .icon { font-size: 4em; margin-bottom: 20px; }
+        h1 { font-size: 2.5em; margin-bottom: 20px; color: #ff6b6b; }
+        p { font-size: 1.1em; margin-bottom: 15px; line-height: 1.6; }
+        .format { 
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 20px 0;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .executors {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .executor {
+            background: rgba(76, 175, 80, 0.2);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+        .powered-by {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9em;
+            color: rgba(255,255,255,0.7);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">🚫</div>
+        <h1>Access Restricted</h1>
+        <p><strong>This domain serves raw scripts for Roblox executors only.</strong></p>
+        <p>Regular browsers cannot access script content due to security restrictions.</p>
+        
+        <div class="format">
+            <strong>URL Format:</strong><br>
+            https://this-domain.vercel.app/<span style="color: #4CAF50;">script-name</span>
+        </div>
+        
+        <p><strong>Supported Executors:</strong></p>
+        <div class="executors">
+            <div class="executor">Synapse X</div>
+            <div class="executor">KRNL</div>
+            <div class="executor">Script-Ware</div>
+            <div class="executor">Fluxus</div>
+            <div class="executor">Oxygen U</div>
+            <div class="executor">JJSploit</div>
+        </div>
+        
+        <div class="powered-by">
+            <strong>⚡ Powered by Upstash Redis</strong><br>
+            High-performance script storage and delivery
+        </div>
+    </div>
+</body>
+</html>
