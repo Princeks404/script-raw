@@ -1,4 +1,9 @@
-import { kv } from '@vercel/kv';
+import { Redis } from '@upstash/redis';
+
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN,
+});
 
 export default async function handler(req, res) {
   // Get script name from query parameter
@@ -18,24 +23,27 @@ export default async function handler(req, res) {
     }
 
     // Try to get script ID from name mapping (faster lookup)
-    const scriptId = await kv.get(`name:${name.toLowerCase()}`);
+    const scriptId = await redis.get(`name:${name.toLowerCase()}`);
     let script = null;
     
     if (scriptId) {
       // Direct lookup by ID
-      const scriptData = await kv.get(`script:${scriptId}`);
+      const scriptData = await redis.get(`script:${scriptId}`);
       if (scriptData) {
-        script = scriptData;
+        script = JSON.parse(scriptData);
       }
     } else {
       // Fallback: search through all scripts
-      const keys = await kv.keys('script:*');
+      const keys = await redis.keys('script:*');
       
       for (const key of keys) {
-        const scriptData = await kv.get(key);
-        if (scriptData && scriptData.name === name.toLowerCase()) {
-          script = scriptData;
-          break;
+        const scriptData = await redis.get(key);
+        if (scriptData) {
+          const parsedScript = JSON.parse(scriptData);
+          if (parsedScript && parsedScript.name === name.toLowerCase()) {
+            script = parsedScript;
+            break;
+          }
         }
       }
     }
