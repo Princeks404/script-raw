@@ -1,7 +1,8 @@
-import redis from '../lib/redis.js';
+import { kv } from '@vercel/kv';
 
 export default async function handler(req, res) {
-  const { name } = req.query;
+  // Get script name from query parameter
+  const name = req.query.name;
   
   if (!name) {
     return res.status(400).send('-- Script name is required');
@@ -17,45 +18,37 @@ export default async function handler(req, res) {
     }
 
     // Try to get script ID from name mapping (faster lookup)
-    const scriptId = await redis.get(`name:${name.toLowerCase()}`);
+    const scriptId = await kv.get(`name:${name.toLowerCase()}`);
     let script = null;
     
     if (scriptId) {
       // Direct lookup by ID
-      const scriptData = await redis.get(`script:${scriptId}`);
+      const scriptData = await kv.get(`script:${scriptId}`);
       if (scriptData) {
-        script = JSON.parse(scriptData);
+        script = scriptData;
       }
     } else {
-      // Fallback: search through all scripts (slower)
-      const keys = await redis.keys('script:*');
+      // Fallback: search through all scripts
+      const keys = await kv.keys('script:*');
       
       for (const key of keys) {
-        const scriptData = await redis.get(key);
-        if (scriptData) {
-          const parsedScript = JSON.parse(scriptData);
-          if (parsedScript.name === name.toLowerCase()) {
-            script = parsedScript;
-            break;
-          }
+        const scriptData = await kv.get(key);
+        if (scriptData && scriptData.name === name.toLowerCase()) {
+          script = scriptData;
+          break;
         }
       }
     }
 
     if (!script) {
-      return res.status(404).send('-- Script not found in Upstash Redis');
+      return res.status(404).send('-- Script not found');
     }
-
-    // Log access (optional - for analytics)
-    await redis.incr(`access:${script.id}:${new Date().toISOString().split('T')[0]}`);
 
     // Return raw script content
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
     res.setHeader('Pragma', 'no-cache');
     res.setHeader('Expires', '0');
-    res.setHeader('X-Script-ID', script.id);
-    res.setHeader('X-Script-Updated', script.updated);
     
     return res.send(script.content);
     
@@ -91,6 +84,5 @@ function isExecutorRequest(userAgent, referer) {
   }
   
   // Allow requests without typical browser headers (likely executors)
-  // Executors typically don't send referer headers or have minimal user agents
   return !referer || referer === '' || userAgent.length < 50;
 }
