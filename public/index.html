@@ -36,26 +36,6 @@
             margin: 20px 0;
             border: 1px solid rgba(255,255,255,0.1);
         }
-        .executors {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 10px;
-            margin: 20px 0;
-        }
-        .executor {
-            background: rgba(76, 175, 80, 0.2);
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 0.9em;
-            border: 1px solid rgba(76, 175, 80, 0.3);
-        }
-        .powered-by {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.9em;
-            color: rgba(255,255,255,0.7);
-        }
     </style>
 </head>
 <body>
@@ -63,27 +43,14 @@
         <div class="icon">🚫</div>
         <h1>Access Restricted</h1>
         <p><strong>This domain serves raw scripts for Roblox executors only.</strong></p>
-        <p>Regular browsers cannot access script content due to security restrictions.</p>
+        <p>Regular browsers cannot access script content.</p>
         
         <div class="format">
             <strong>URL Format:</strong><br>
             https://this-domain.vercel.app/<span style="color: #4CAF50;">script-name</span>
         </div>
         
-        <p><strong>Supported Executors:</strong></p>
-        <div class="executors">
-            <div class="executor">Synapse X</div>
-            <div class="executor">KRNL</div>
-            <div class="executor">Script-Ware</div>
-            <div class="executor">Fluxus</div>
-            <div class="executor">Oxygen U</div>
-            <div class="executor">JJSploit</div>
-        </div>
-        
-        <div class="powered-by">
-            <strong>⚡ Powered by Upstash Redis</strong><br>
-            High-performance script storage and delivery
-        </div>
+        <p><strong>Status:</strong> ✅ Fixed routing - URLs should work now!</p>
     </div>
 </body>
 </html>
