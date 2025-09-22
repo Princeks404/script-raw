@@ -59,7 +59,7 @@ export default async function handler(req, res) {
 <body>
     <div class="container">
         <h1><span>🚫</span> Executor Access Only</h1>
-        <p>This endpoint serves raw scripts for Roblox executors only. Copy the code below to run it.</p>
+        <p>This url only for Roblox executors only. Copy the code below to run it.</p>
         <div class="code-container">
             <pre><code id="copy-text-content">Loading...</code></pre>
             <button id="copy-button">Copy</button>
