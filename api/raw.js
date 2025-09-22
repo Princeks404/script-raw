@@ -42,7 +42,8 @@ export default async function handler(req, res) {
     if (scriptId) {
       const scriptData = await redis.get(`script:${scriptId}`);
       if (scriptData) {
-        script = JSON.parse(scriptData);
+        // Check if scriptData is already an object or needs parsing
+        script = typeof scriptData === 'string' ? JSON.parse(scriptData) : scriptData;
       }
     } else {
       const keys = await redis.keys('script:*');
@@ -50,7 +51,8 @@ export default async function handler(req, res) {
       for (const key of keys) {
         const scriptData = await redis.get(key);
         if (scriptData) {
-          const parsedScript = JSON.parse(scriptData);
+          // Check if scriptData is already an object or needs parsing
+          const parsedScript = typeof scriptData === 'string' ? JSON.parse(scriptData) : scriptData;
           if (parsedScript && parsedScript.name === name.toLowerCase()) {
             script = parsedScript;
             break;
