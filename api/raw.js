@@ -71,7 +71,7 @@ export default async function handler(req, res) {
             const copyButton = document.getElementById('copy-button');
             
             const scriptName = '${name}';
-            const command = \`loadstring(game:HttpGet("https://\${window.location.host}/\${scriptName}"))();\`;
+            const command = \`loadstring(game:HttpGet("https://\${window.location.host}/\${scriptName}"))()\`;
             codeElement.textContent = command;
             
             copyButton.addEventListener('click', () => {
